@@ -1,0 +1,49 @@
+#!/bin/bash
+
+### CONFIGURATION ###
+
+# Set the number of the iptables mark, to catch the packets and route them through the tunnel
+iptables_mark=1
+
+# Set the destination ips to use for pinging
+destination_ips=( '91.216.248.25' '108.61.211.25' '193.99.144.85' '141.1.1.1' )
+
+# Set the source interface
+source_if='tun-anonvpn'
+
+# Logfile path
+log_path='/var/log/watchdog_vpn.log'
+
+### FUNCTIONS ###
+
+function execute_on_fail() {
+service openvpn restart
+log "Restart VPN for reasons!"
+}
+
+function separator() {
+	echo "" >> $log_path
+}
+
+function log() {
+	date "+%Y/%m/%d %H:%M:%S: $1" >> $log_path
+}
+
+### CODE ###
+
+separator
+
+for destination_ip in ${destination_ips[@]}; do
+    log "Trying to get a reply from $destination_ip..."
+	ping -q -I $source_if -c1 -m $iptables_mark $destination_ip >& /dev/null
+	if [ $? -eq 0 ]; then
+		log "Got a reply from $destination_ip, so everything seems to be in order. Exiting."
+		exit 0
+	fi
+	sleep 1
+done
+
+log "Did not get a reply from any destination ip, so there seems to be a problem. Running 'execute_on_fail'..."
+execute_on_fail
+log "Exiting."
+exit 1
