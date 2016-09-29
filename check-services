@@ -86,7 +86,7 @@ echo "Connections to other gateways:"
 
 cd /etc/fastd/
 cd $(ls|head -n 1)/peers/
-for i in nord-gw*; do
+for i in vpn*; do
   FASTD_SOCKET=$SOCK fastd-query peers name $i|egrep "(established|vpn)"
 done
 
