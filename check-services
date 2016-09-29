@@ -64,7 +64,7 @@ for s in isc-dhcp-server radvd; do
   fi
 done
 # check for services if running
-for s in ntp openvpn rpcbind fastd bind9; do
+for s in ntp openvpn fastd bind9; do
     echo "==>" $s "status"
     service $s status
 done
