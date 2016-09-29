@@ -91,3 +91,5 @@ for i in vpn*; do
 done
 
 # fastd-query-$MESH_CODE peers mac ba:76:1b:ba:62:cb
+echo "conntrack sollte auf 1048576 gesetzt sein:"
+sysctl -a|grep conntrack_max --color=auto
