@@ -93,3 +93,6 @@ done
 # fastd-query-$MESH_CODE peers mac ba:76:1b:ba:62:cb
 echo "conntrack sollte auf 1048576 gesetzt sein:"
 sysctl -a|grep conntrack_max --color=auto
+# set with
+# /sbin/sysctl -w net.netfilter.nf_conntrack_max=1048576 && echo net.ipv4.netfilter.ip_conntrack_max = 1048576 >> /etc/sysctl.conf                             │
+                  
