@@ -14,6 +14,9 @@ source_if='tun-anonvpn'
 # Logfile path
 log_path='/var/log/watchdog_vpn.log'
 
+# set the right path to be used also when called by cron
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
 ### FUNCTIONS ###
 
 function execute_on_fail() {
