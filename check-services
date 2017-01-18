@@ -12,6 +12,7 @@ else
 fi
 
 MESH_CODE=ffnord
+VPN_PREFIX=vpn
 
 R="\033[31m" #red
 G="\033[32m" #green
@@ -86,7 +87,7 @@ echo "Connections to other gateways:"
 
 cd /etc/fastd/
 cd $(ls|head -n 1)/peers/
-for i in vpn*; do
+for i in $VPN_PREFIX*; do
   FASTD_SOCKET=$SOCK fastd-query peers name $i|egrep "(established|vpn)"
 done
 
